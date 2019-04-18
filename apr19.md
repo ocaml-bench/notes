@@ -58,9 +58,9 @@ iteration of the function.
 The tool is designed to have minimal external dependencies and can be run
 against a test compiler binary without additional packages. The experimental
 method of running for multiple embedded iterations is also used by Jane
-Street’s `core_bench`<sup>[3] and Haskell’s criterion[^4][3] and Haskell’s criterion[^4]</sup>.
+Street’s `core_bench`<sup>[3][3]</sup> and Haskell’s criterion<sup>[4][4]</sup>.
 
-#### operf-macro<sup>[5] and sandmark[^6][5] and sandmark[^6]</sup>
+#### operf-macro<sup>[5][5]</sup> and sandmark<sup>[6][6]</sup>
 
 Operf-macro provides a framework to define and run macro-benchmarks. The
 benchmarks themselves are OPAM packages and the compiler versions are OPAM
@@ -97,7 +97,7 @@ The intention is to expand the set of multicore specific tests to include larger
 
 The Python community has continuous benchmarking both for their CPython<sup>[7][7]</sup> and
 PyPy<sup>[8][8]</sup> runtimes. The benchmarking data is collected by running the Python
-Performance Benchmark Suite<sup>[9]. The open-source web application Codespeed[^10][9]. The open-source web application Codespeed[^10]</sup>
+Performance Benchmark Suite<sup>[9][9]</sup>. The open-source web application Codespeed<sup>[10][10]</sup>
 provides a front end to navigate and visualize the results. Codespeed is
 written in Python on Django and provides views into the results via a revision
 table, a timeline by benchmark and comparison over all benchmarks between
