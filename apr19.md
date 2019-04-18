@@ -1,8 +1,9 @@
 ## Benchmarking the OCaml compiler: what we have learnt and suggestions for the future
 
-_Tom Kelly ([ctk21@cl.cam.ac.uk](mailto:ctk21@cl.cam.ac.uk))_
-_Stephen Dolan_
-_Sadiq Jaffer_
+_Tom Kelly ([ctk21@cl.cam.ac.uk](mailto:ctk21@cl.cam.ac.uk))_,
+_Stephen Dolan_,
+_Sadiq Jaffer_,
+_KC Sivaramakrishnan_,
 _Anil Madhavapeddy_
 
 Our goal is to provide statistically meaningful benchmarking of the OCaml compiler
@@ -21,10 +22,16 @@ the OCaml compiler.
 
 Our high level aims were:
 
-*   Try to reuse OCaml benchmarks that exist and cover a range of micro and macro use cases. 
-*   Try to incorporate best-practice and reuse tools where appropriate by looking at what other compiler development communities are doing. 
-*   Provide visualizations that are easy to use for OCaml developers making it easy and less time consuming to merge complex features like multicore without performance regressions.  
-*   Document the steps to setup the system including its experimental environment for benchmarking so that the knowledge is captured for others to reuse.
+*   Try to reuse OCaml benchmarks that exist and cover a range of micro and
+    macro use cases. 
+*   Try to incorporate best-practice and reuse tools where appropriate by
+    looking at what other compiler development communities are doing. 
+*   Provide visualizations that are easy to use for OCaml developers making it
+    easy and less time consuming to merge complex features like multicore
+    without performance regressions.  
+*   Document the steps to setup the system including its experimental
+    environment for benchmarking so that the knowledge is captured for others
+    to reuse.
 
 This document is structured as follows: we survey the OCaml benchmark packages
 available; we survey the infrastructure other communities are using to catch
@@ -163,9 +170,9 @@ where possible. We configured our x86 Linux machines as follows:[^17]
     Linux isolcpus kernel parameter. This allowed us to be sure that only the
     benchmarking process was scheduled on a core and that core did not schedule
     other processes on the system.
-*   **Interrupts: **We shifted all operating system interrupt handling away
+*   **Interrupts:** We shifted all operating system interrupt handling away
     from the isolated CPUs we used for benchmarking.
-*   **ASLR (address space layout randomisation): **We switched this off on our
+*   **ASLR (address space layout randomisation):** We switched this off on our
     benchmarking runs to make experiments repeatable.
 
 With this configuration, we found that we could run benchmarks such that they
