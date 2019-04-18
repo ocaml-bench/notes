@@ -63,10 +63,10 @@ Street’s `core_bench`<sup>[3](#ref3)</sup> and Haskell’s criterion<sup>[4](#
 ### operf-macro<sup>[5](#ref5)</sup> and sandmark<sup>[6](#ref6)</sup>
 
 Operf-macro provides a framework to define and run macro-benchmarks. The
-benchmarks themselves are OPAM packages and the compiler versions are OPAM
-switches. The use of OPAM is to handle the dependencies of larger benchmarks
+benchmarks themselves are opam packages and the compiler versions are opam
+switches. The use of opam is to handle the dependencies of larger benchmarks
 and to handle the maintenances of the macro-benchmark code base. Sandmark takes
-a similar approach to operf-macro but utilizes OPAM v2 and pins the opam repo
+a similar approach to operf-macro but utilizes opam v2 and pins the opam repo
 to be internally defined so that all the code is fixed from within the one
 project. For the purposes of our benchmarking we decided to run both the operf-micro and
 sandmark packages.
@@ -146,7 +146,7 @@ tools and is inspired by them.
 OCaml Labs put together an initial multicore benchmarking site
 [http://ocamllabs.io/multicore](http://ocamllabs.io/multicore). This built on
 the OCamlPro flambda site by (i) implementing visualization in a single
-javascript library; (ii) upgrading to OPAM v2; (iii) updating the
+javascript library; (ii) upgrading to opam v2; (iii) updating the
 macro-benchmarks to more recent version.<sup>[15](#ref15)</sup> The work presented here
 incorporates the experience of building that site and builds on it.
 
