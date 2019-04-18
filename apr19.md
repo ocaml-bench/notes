@@ -412,79 +412,54 @@ infrastructure can be more generally useful in the wider community. We hope
 that by sharing our experiences with benchmarking OCaml code we can help people
 quickly realise good benchmarking experiments and avoid non-trivial pitfalls. 
 
-<!-- Footnotes themselves at the bottom. -->
 ## Notes
 
-[^1]:
-     [http://bench.ocamllabs.io](http://bench.ocamllabs.io) which presents operf-micro benchmark experiments and [http://bench2.ocamllabs.io](http://bench2.ocamllabs.io) which presents sandmark based benchmark experiments. 
+[^1]: [http://bench.ocamllabs.io](http://bench.ocamllabs.io) which presents operf-micro benchmark experiments and [http://bench2.ocamllabs.io](http://bench2.ocamllabs.io) which presents sandmark based benchmark experiments. 
 
-[^2]:
-     [https://github.com/OCamlPro/operf-micro](https://github.com/OCamlPro/operf-micro) - tool code
+[^2]: [https://github.com/OCamlPro/operf-micro](https://github.com/OCamlPro/operf-micro) - tool code
     [https://hal.inria.fr/hal-01245844/document](https://hal.inria.fr/hal-01245844/document) - “Operf: Benchmarking the OCaml Compiler”, Chambart et al
 
-[^3]:
-     Code for core_bench [https://github.com/janestreet/core_bench](https://github.com/janestreet/core_bench) and blog post describing core_bench [https://blog.janestreet.com/core_bench-micro-benchmarking-for-ocaml/](https://blog.janestreet.com/core_bench-micro-benchmarking-for-ocaml/)
+[^3]: Code for core_bench [https://github.com/janestreet/core_bench](https://github.com/janestreet/core_bench) and blog post describing core_bench [https://blog.janestreet.com/core_bench-micro-benchmarking-for-ocaml/](https://blog.janestreet.com/core_bench-micro-benchmarking-for-ocaml/)
 
-[^4]:
-     Haskell code for criterion [https://github.com/bos/criterion](https://github.com/bos/criterion) and tutorial on using criterion [http://www.serpentine.com/criterion/tutorial.html](http://www.serpentine.com/criterion/tutorial.html) 
+[^4]: Haskell code for criterion [https://github.com/bos/criterion](https://github.com/bos/criterion) and tutorial on using criterion [http://www.serpentine.com/criterion/tutorial.html](http://www.serpentine.com/criterion/tutorial.html) 
 
-[^5]:
-     Code and documentation for operf-macro [https://github.com/OCamlPro/operf-macro](https://github.com/OCamlPro/operf-macro) 
+[^5]: Code and documentation for operf-macro [https://github.com/OCamlPro/operf-macro](https://github.com/OCamlPro/operf-macro) 
 
-[^6]:
-     Code for sandmark [https://github.com/ocamllabs/sandmark](https://github.com/ocamllabs/sandmark) 
+[^6]: Code for sandmark [https://github.com/ocamllabs/sandmark](https://github.com/ocamllabs/sandmark) 
 
-[^7]:
-     CPython continuous benchmarking site [https://speed.python.org/](https://speed.python.org/) 
+[^7]: CPython continuous benchmarking site [https://speed.python.org/](https://speed.python.org/) 
 
-[^8]:
-     PyPy continuous benchmarking site [http://speed.pypy.org/](http://speed.pypy.org/) 
+[^8]: PyPy continuous benchmarking site [http://speed.pypy.org/](http://speed.pypy.org/) 
 
-[^9]:
-      Python Performance Benchmark Suite [https://pyperformance.readthedocs.io/](https://pyperformance.readthedocs.io/) 
+[^9]: Python Performance Benchmark Suite [https://pyperformance.readthedocs.io/](https://pyperformance.readthedocs.io/) 
 
-[^10]:
-     Codespeed web app for visualization of performance data [https://github.com/tobami/codespeed](https://github.com/tobami/codespeed) 
+[^10]: Codespeed web app for visualization of performance data [https://github.com/tobami/codespeed](https://github.com/tobami/codespeed) 
 
-[^11]:
-     LNT software [http://llvm.org/docs/lnt/](http://llvm.org/docs/lnt/) and the performance site [https://lnt.llvm.org/](https://lnt.llvm.org/) 
+[^11]: LNT software [http://llvm.org/docs/lnt/](http://llvm.org/docs/lnt/) and the performance site [https://lnt.llvm.org/](https://lnt.llvm.org/) 
 
-[^12]:
-     Description of Haskell issues with hard performance continous integration tests [https://ghc.haskell.org/trac/ghc/wiki/Performance/Tests](https://ghc.haskell.org/trac/ghc/wiki/Performance/Tests) 
+[^12]: Description of Haskell issues with hard performance continous integration tests [https://ghc.haskell.org/trac/ghc/wiki/Performance/Tests](https://ghc.haskell.org/trac/ghc/wiki/Performance/Tests) 
 
-[^13]:
-     ‘2017 summer of code’ work on improving Haskell performance integration tests [https://github.com/jared-w/HSOC2017/blob/master/Proposal.pdf](https://github.com/jared-w/HSOC2017/blob/master/Proposal.pdf)  
+[^13]: ‘2017 summer of code’ work on improving Haskell performance integration tests [https://github.com/jared-w/HSOC2017/blob/master/Proposal.pdf](https://github.com/jared-w/HSOC2017/blob/master/Proposal.pdf)  
 
-[^14]:
-     Live tracking site [https://perf.rust-lang.org/](https://perf.rust-lang.org/) and code for it [https://github.com/rust-lang-nursery/rustc-perf](https://github.com/rust-lang-nursery/rustc-perf)  
+[^14]: Live tracking site [https://perf.rust-lang.org/](https://perf.rust-lang.org/) and code for it [https://github.com/rust-lang-nursery/rustc-perf](https://github.com/rust-lang-nursery/rustc-perf)  
 
-[^15]:
-     More information here: [http://kcsrk.info/multicore/ocaml/benchmarks/2018/09/13/1543-multicore-ci/](http://kcsrk.info/multicore/ocaml/benchmarks/2018/09/13/1543-multicore-ci/) 
+[^15]: More information here: [http://kcsrk.info/multicore/ocaml/benchmarks/2018/09/13/1543-multicore-ci/](http://kcsrk.info/multicore/ocaml/benchmarks/2018/09/13/1543-multicore-ci/) 
 
-[^16]:
-     A nice description of why first-parent helps is here [http://www.davidchudzicki.com/posts/first-parent/](http://www.davidchudzicki.com/posts/first-parent/) 
+[^16]: A nice description of why first-parent helps is here [http://www.davidchudzicki.com/posts/first-parent/](http://www.davidchudzicki.com/posts/first-parent/) 
 
-[^17]:
-     For more details please see [https://github.com/ocaml-bench/ocaml_bench_scripts/#notes-on-hardware-and-os-settings-for-linux-benchmarking](https://github.com/ocaml-bench/ocaml_bench_scripts/#notes-on-hardware-and-os-settings-for-linux-benchmarking)
+[^17]: For more details please see [https://github.com/ocaml-bench/ocaml_bench_scripts/#notes-on-hardware-and-os-settings-for-linux-benchmarking](https://github.com/ocaml-bench/ocaml_bench_scripts/#notes-on-hardware-and-os-settings-for-linux-benchmarking)
 
-[^18]:
-     There is some academic literature in this direction; for example “Rigourous benchmarking in reasonable time”, Kalibera et al [https://dl.acm.org/citation.cfm?id=2464160](https://dl.acm.org/citation.cfm?id=2464160) and “STABILIZER: statistically sound performance evaluation”, Curtsinger et al,  [https://dl.acm.org/citation.cfm?id=2451141](https://dl.acm.org/citation.cfm?id=2451141). However randomization approaches need to take care that the layout randomization distribution captures the relevant features of layout randomization that real user binaries will see from ASLR, link-order or dynamic library linking.
+[^18]: There is some academic literature in this direction; for example “Rigourous benchmarking in reasonable time”, Kalibera et al [https://dl.acm.org/citation.cfm?id=2464160](https://dl.acm.org/citation.cfm?id=2464160) and “STABILIZER: statistically sound performance evaluation”, Curtsinger et al,  [https://dl.acm.org/citation.cfm?id=2451141](https://dl.acm.org/citation.cfm?id=2451141). However randomization approaches need to take care that the layout randomization distribution captures the relevant features of layout randomization that real user binaries will see from ASLR, link-order or dynamic library linking.
 
-[^19]:
-     We feel that there must be some memory latency bottlenecks in the sandmark macro benchmarking suite, but we have yet to deep-dive and investigate a performance instability due to noise in memory latency for fetching instructions to execute. That is the performance may be bottlenecked on instruction memory fetch, but we haven’t seen instruction memory fetch latency being very noisy between benchmark runs in our setup.
+[^19]: We feel that there must be some memory latency bottlenecks in the sandmark macro benchmarking suite, but we have yet to deep-dive and investigate a performance instability due to noise in memory latency for fetching instructions to execute. That is the performance may be bottlenecked on instruction memory fetch, but we haven’t seen instruction memory fetch latency being very noisy between benchmark runs in our setup.
 
-[^20]:
-     Google’s AutoFDO [https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45290.pdf](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45290.pdf), Facebook’s HFSort [https://research.fb.com/wp-content/uploads/2017/01/cgo2017-hfsort-final1.pdf](https://research.fb.com/wp-content/uploads/2017/01/cgo2017-hfsort-final1.pdf) and Facebook’s Bolt [https://github.com/facebookincubator/BOLT](https://github.com/facebookincubator/BOLT) are recent examples to report imporvements in some deployed data-centre workloads. 
+[^20]: Google’s AutoFDO [https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45290.pdf](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45290.pdf), Facebook’s HFSort [https://research.fb.com/wp-content/uploads/2017/01/cgo2017-hfsort-final1.pdf](https://research.fb.com/wp-content/uploads/2017/01/cgo2017-hfsort-final1.pdf) and Facebook’s Bolt [https://github.com/facebookincubator/BOLT](https://github.com/facebookincubator/BOLT) are recent examples to report imporvements in some deployed data-centre workloads. 
 
-[^21]:
-     The effects are not limited to x86 as it has also been observed on ARM Cortex-A53 and Cortex-A57 processors with LLVM [https://www.youtube.com/watch?v=COmfRpnujF8](https://www.youtube.com/watch?v=COmfRpnujF8)   
+[^21]: The effects are not limited to x86 as it has also been observed on ARM Cortex-A53 and Cortex-A57 processors with LLVM [https://www.youtube.com/watch?v=COmfRpnujF8](https://www.youtube.com/watch?v=COmfRpnujF8)   
 
-[^22]:
-     The OCaml example is here [https://github.com/ocaml-bench/ocaml_bench_scripts/tree/master/stability_example](https://github.com/ocaml-bench/ocaml_bench_scripts/tree/master/stability_example), for the super curious there are yet more C++ examples to be had (although not necessarily the same underlying micro mechanism and all dependent on processor) [https://dendibakh.github.io/blog/2018/01/18/Code_alignment_issues](https://dendibakh.github.io/blog/2018/01/18/Code_alignment_issues)  
+[^22]: The OCaml example is here [https://github.com/ocaml-bench/ocaml_bench_scripts/tree/master/stability_example](https://github.com/ocaml-bench/ocaml_bench_scripts/tree/master/stability_example), for the super curious there are yet more C++ examples to be had (although not necessarily the same underlying micro mechanism and all dependent on processor) [https://dendibakh.github.io/blog/2018/01/18/Code_alignment_issues](https://dendibakh.github.io/blog/2018/01/18/Code_alignment_issues)  
 
-[^23]:
-     The Q&A at LLVM dev meeting videos [https://www.youtube.com/watch?v=IX16gcX4vDQ](https://www.youtube.com/watch?v=IX16gcX4vDQ) and [https://www.youtube.com/watch?v=COmfRpnujF8](https://www.youtube.com/watch?v=COmfRpnujF8) are examples of discussion around the area. The general area of code layout is also a problem area in the academic community “Producing wrong data without doing anything obviously wrong!”, Mytkowicz et al [https://dl.acm.org/citation.cfm?id=1508275](https://dl.acm.org/citation.cfm?id=1508275) 
+[^23]: The Q&A at LLVM dev meeting videos [https://www.youtube.com/watch?v=IX16gcX4vDQ](https://www.youtube.com/watch?v=IX16gcX4vDQ) and [https://www.youtube.com/watch?v=COmfRpnujF8](https://www.youtube.com/watch?v=COmfRpnujF8) are examples of discussion around the area. The general area of code layout is also a problem area in the academic community “Producing wrong data without doing anything obviously wrong!”, Mytkowicz et al [https://dl.acm.org/citation.cfm?id=1508275](https://dl.acm.org/citation.cfm?id=1508275) 
 
-[^24]:
-     For more on LLVM alignment options, see [https://dendibakh.github.io/blog/2018/01/25/Code_alignment_options_in_llvm](https://dendibakh.github.io/blog/2018/01/25/Code_alignment_options_in_llvm)
+[^24]: For more on LLVM alignment options, see [https://dendibakh.github.io/blog/2018/01/25/Code_alignment_options_in_llvm](https://dendibakh.github.io/blog/2018/01/25/Code_alignment_options_in_llvm)
 
