@@ -60,20 +60,37 @@ against a test compiler binary without additional packages. The experimental
 method of running for multiple embedded iterations is also used by Jane
 Street’s `core_bench`<sup>[3](#ref3)</sup> and Haskell’s criterion<sup>[4](#ref4)</sup>.
 
-### operf-macro<sup>[5](#ref5)</sup> and sandmark<sup>[6](#ref6)</sup>
+### operf-macro<sup>[5](#ref5)</sup>
 
 Operf-macro provides a framework to define and run macro-benchmarks. The
 benchmarks themselves are opam packages and the compiler versions are opam
 switches. The use of opam is to handle the dependencies of larger benchmarks
-and to handle the maintenances of the macro-benchmark code base. Sandmark takes
-a similar approach to operf-macro but utilizes opam v2 and pins the opam repo
-to be internally defined so that all the code is fixed from within the one
-project. For the purposes of our benchmarking we decided to run both the operf-micro and
+and to handle the maintenances of the macro-benchmark code base.  Benchmark
+descriptions are split among metadata stored in a customised opam-repository
+that overlay the benchmarks over existing codebases.
+
+### Sandmark<sup>[6](#ref6)</sup>
+
+Sandmark is a tool we have developed takes that a similar approach to operf-macro, but:
+- utilizes opam v2 and pins the opam repo to one internally defined so that all the benchmarked
+  code is fixed and not dependent on the global opam-repository
+- does not have a ppx dependency for the tested packages, making it easier to work on
+  development versions of the compiler
+- has the benchmark descriptions in a single `dune` file in the sandmark repository,
+  to make it easy to see what is being measured in one place
+
+For the purposes of our benchmarking we decided to run both the operf-micro and
 sandmark packages.
 
 #### Single-threaded tests in Sandmark
 
-Included in Sandmark are a range of tests ported from operf-macro that run on or could be easily modified to run on multicore. In addition to these, a new set of performance tests have been added that aim to expand coverage over compiler and runtime areas that differ in implementation between vanilla and multicore. These tests are designed to run on both vanilla and multicore and should highlight changes in single-threaded performance between the two implementations. The main areas we aimed to cover were:
+Included in Sandmark are a range of tests ported from operf-macro that run on
+or could be easily modified to run on multicore. In addition to these, a new
+set of performance tests have been added that aim to expand coverage over
+compiler and runtime areas that differ in implementation between vanilla and
+multicore. These tests are designed to run on both vanilla and multicore and
+should highlight changes in single-threaded performance between the two
+implementations. The main areas we aimed to cover were:
 
 * Stack overflow checks in function prologues
 * Costs of switching stacks when making external calls (alloc/noalloc/various numbers of parameters)
@@ -81,28 +98,39 @@ Included in Sandmark are a range of tests ported from operf-macro that run on or
 * Weak pointer implementation changes
 * Finalizer implementation changes
 * General GC performance under various different types of allocation behaviour
-    * Remembered set overhead implementation changes
+* Remembered set overhead implementation changes
 
-Also included in sandmark are some of the best single-threaded OCaml entries for the Benchmarks Game, these are already well optimised and should serve to highlight performance differences between vanilla and multicore on single threaded code.
+Also included in sandmark are some of the best single-threaded OCaml entries
+for the Benchmarks Game, these are already well optimised and should serve to
+highlight performance differences between vanilla and multicore on single
+threaded code.
 
 #### Multicore-specific tests in Sandmark
 
-In addition to the single-threaded tests in Sandmark, there are also multicore-specific tests that are intended to highlight performance changes between commits. These consist so far of various simple lock-free data structure tests that stress the multicore GC in different ways e.g some force many GC promotions to the major heap while others pre-allocate.
+In addition to the single-threaded tests in Sandmark, there are also
+multicore-specific tests that are intended to highlight performance changes
+between commits. These consist so far of various simple lock-free data
+structure tests that stress the multicore GC in different ways e.g some force
+many GC promotions to the major heap while others pre-allocate.
 
-The intention is to expand the set of multicore specific tests to include larger benchmarks as well as tests that compare existing approaches to parallelism on vanilla OCaml with reimplementations on multicore.
+The intention is to expand the set of multicore specific tests to include
+larger benchmarks as well as tests that compare existing approaches to
+parallelism on vanilla OCaml with reimplementations on multicore.
 
 ## How other compiler communities handle continuous benchmarking
 
 ### Python (CPython and PyPy)
 
-The Python community has continuous benchmarking both for their CPython<sup>[7](#ref7)</sup> and
-PyPy<sup>[8](#ref8)</sup> runtimes. The benchmarking data is collected by running the Python
-Performance Benchmark Suite<sup>[9](#ref9)</sup>. The open-source web application Codespeed<sup>[10](#ref10)</sup>
-provides a front end to navigate and visualize the results. Codespeed is
-written in Python on Django and provides views into the results via a revision
-table, a timeline by benchmark and comparison over all benchmarks between
-tagged versions. Codespeed has been picked up by other projects as a way to
-quickly provide visualizations of performance data across code revisions.
+The Python community has continuous benchmarking both for their
+CPython<sup>[7](#ref7)</sup> and PyPy<sup>[8](#ref8)</sup> runtimes. The
+benchmarking data is collected by running the Python Performance Benchmark
+Suite<sup>[9](#ref9)</sup>. The open-source web application
+Codespeed<sup>[10](#ref10)</sup> provides a front end to navigate and visualize
+the results. Codespeed is written in Python on Django and provides views into
+the results via a revision table, a timeline by benchmark and comparison over
+all benchmarks between tagged versions. Codespeed has been picked up by other
+projects as a way to quickly provide visualizations of performance data across
+code revisions.
 
 ### LLVM
 
@@ -110,18 +138,18 @@ LLVM has a collection of micro-benchmarks in their C/C++ compiler test suite.
 These micro-benchmarks are built on the google-benchmark library and produce
 statistics that can be easily fed downstream. They also support external tests
 (for example SPEC CPU 2006). LLVM have performance tracking software called LNT
-which drives a continuous monitoring site<sup>[11](#ref11)</sup>. While the LNT software is
-packaged for people to use in other projects, we could not find another project
-using it for visualizing performance data and at first glance did not look easy
-to reuse. 
+which drives a continuous monitoring site<sup>[11](#ref11)</sup>. While the LNT
+software is packaged for people to use in other projects, we could not find
+another project using it for visualizing performance data and at first glance
+did not look easy to reuse. 
 
 ### GHC
 
 The Haskell community have performance regression tests that have hardcoded
 values which trip a continuous-integration failure. This method has proved
-painful for them<sup>[12](#ref12)</sup> and they have been looking to change it to a more data
-driven approach<sup>[13](#ref13)</sup>. At this time they did not seem to have infrastructure
-running to help them. 
+painful for them<sup>[12](#ref12)</sup> and they have been looking to change it
+to a more data driven approach<sup>[13](#ref13)</sup>. At this time they did
+not seem to have infrastructure running to help them. 
 
 ### Rust
 
@@ -143,19 +171,20 @@ tools and is inspired by them.
 
 ### Initial OCaml multicore benchmarking site
 
-OCaml Labs put together an initial multicore benchmarking site
+OCaml Labs put together an initial hosted multicore benchmarking site
 [http://ocamllabs.io/multicore](http://ocamllabs.io/multicore). This built on
 the OCamlPro flambda site by (i) implementing visualization in a single
 javascript library; (ii) upgrading to opam v2; (iii) updating the
-macro-benchmarks to more recent version.<sup>[15](#ref15)</sup> The work presented here
-incorporates the experience of building that site and builds on it.
+macro-benchmarks to more recent version.<sup>[15](#ref15)</sup> The work
+presented here incorporates the experience of building that site and builds on
+it.
 
 ## What we put together
 
 We decided to use operf-micro and sandmark as our benchmarks. We went with
-Codespeed as a visualization tool since it looked easy to setup and had
-instances running in multiple projects. We also wanted to try an open source
-tool where there is already a community in place. 
+Codespeed<sup>[10](#ref10)</sup> as a visualization tool since it looked easy
+to setup and had instances running in multiple projects. We also wanted to try
+an open source tool where there is already a community in place. 
 
 The system runs a pipeline: it determines that a commit is of interest on a
 branch timeline it is tracking. It builds the compiler for that commit given
@@ -166,11 +195,14 @@ data.
 ### Transforming git commits to a timeline
 
 Mapping a git branch to a linear timeline requires a bit of care. We use the
-following mapping, we take a branch tag and ask for commits using the
-first-parent option<sup>[16](#ref16)</sup>. We then use the commit date from this as the
-timestamp for a commit. In most repositories this will give a linear code order
-that makes sense, even though the development process has been decentralised.
-It works well for Github style pull-requests development.
+following mapping:
+- we take a branch tag and ask for commits using the git first-parent option<sup>[16](#ref16)</sup>
+- use the commit date from this as the timestamp for a commit.
+
+In most repositories this will give a linear code order that makes sense, even
+though the development process has been decentralised.  It works well for
+Github style pull-requests development, and has been verified to work with the
+`ocaml/ocaml` git development workflow.
 
 ### Experimental setup
 
@@ -193,7 +225,9 @@ where possible. We configured our x86 Linux machines as follows:<sup>[17](#ref17
     benchmarking runs to make experiments repeatable.
 
 With this configuration, we found that we could run benchmarks such that they
-were very likely to give the same result when rerun at another time. 
+were very likely to give the same result when rerun at another time.  Note that
+without making the changes above, there was significantly more variance in the
+test results, so it is important to apply this control.
 
 ### Visualization with Codespeed
 
