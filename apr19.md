@@ -1,4 +1,4 @@
-## Benchmarking the OCaml compiler: what we have learnt and suggestions for the future
+# Benchmarking the OCaml compiler: what we have learnt and suggestions for the future
 
 _Tom Kelly ([ctk21@cl.cam.ac.uk](mailto:ctk21@cl.cam.ac.uk))_,
 _Stephen Dolan_,
@@ -41,9 +41,9 @@ selecting the code, running in a controlled environment through to how it is
 displayed; we summarise what we have learnt; finally we discuss directions
 future work that could follow. 
 
-### Survey of OCaml benchmarks
+## Survey of OCaml benchmarks
 
-#### Operf-micro<sup>[2](#ref2)</sup>
+### Operf-micro<sup>[2](#ref2)</sup>
 
 Operf-micro collates a collection of micro benchmarks originally put together
 to help with the development of flambda. This tool compiles a micro-benchmark
@@ -60,7 +60,7 @@ against a test compiler binary without additional packages. The experimental
 method of running for multiple embedded iterations is also used by Jane
 Street’s `core_bench`<sup>[3](#ref3)</sup> and Haskell’s criterion<sup>[4](#ref4)</sup>.
 
-#### operf-macro<sup>[5](#ref5)</sup> and sandmark<sup>[6](#ref6)</sup>
+### operf-macro<sup>[5](#ref5)</sup> and sandmark<sup>[6](#ref6)</sup>
 
 Operf-macro provides a framework to define and run macro-benchmarks. The
 benchmarks themselves are OPAM packages and the compiler versions are OPAM
@@ -71,7 +71,7 @@ to be internally defined so that all the code is fixed from within the one
 project. For the purposes of our benchmarking we decided to run both the operf-micro and
 sandmark packages.
 
-##### Single-threaded tests in Sandmark
+#### Single-threaded tests in Sandmark
 
 Included in Sandmark are a range of tests ported from operf-macro that run on or could be easily modified to run on multicore. In addition to these, a new set of performance tests have been added that aim to expand coverage over compiler and runtime areas that differ in implementation between vanilla and multicore. These tests are designed to run on both vanilla and multicore and should highlight changes in single-threaded performance between the two implementations. The main areas we aimed to cover were:
 
@@ -85,15 +85,15 @@ Included in Sandmark are a range of tests ported from operf-macro that run on or
 
 Also included in sandmark are some of the best single-threaded OCaml entries for the Benchmarks Game, these are already well optimised and should serve to highlight performance differences between vanilla and multicore on single threaded code.
 
-##### Multicore-specific tests in Sandmark
+#### Multicore-specific tests in Sandmark
 
 In addition to the single-threaded tests in Sandmark, there are also multicore-specific tests that are intended to highlight performance changes between commits. These consist so far of various simple lock-free data structure tests that stress the multicore GC in different ways e.g some force many GC promotions to the major heap while others pre-allocate.
 
 The intention is to expand the set of multicore specific tests to include larger benchmarks as well as tests that compare existing approaches to parallelism on vanilla OCaml with reimplementations on multicore.
 
-### How other compiler communities handle continuous benchmarking
+## How other compiler communities handle continuous benchmarking
 
-#### Python (CPython and PyPy)
+### Python (CPython and PyPy)
 
 The Python community has continuous benchmarking both for their CPython<sup>[7](#ref7)</sup> and
 PyPy<sup>[8](#ref8)</sup> runtimes. The benchmarking data is collected by running the Python
@@ -104,7 +104,7 @@ table, a timeline by benchmark and comparison over all benchmarks between
 tagged versions. Codespeed has been picked up by other projects as a way to
 quickly provide visualizations of performance data across code revisions.
 
-#### LLVM
+### LLVM
 
 LLVM has a collection of micro-benchmarks in their C/C++ compiler test suite.
 These micro-benchmarks are built on the google-benchmark library and produce
@@ -115,7 +115,7 @@ packaged for people to use in other projects, we could not find another project
 using it for visualizing performance data and at first glance did not look easy
 to reuse. 
 
-#### GHC
+### GHC
 
 The Haskell community have performance regression tests that have hardcoded
 values which trip a continuous-integration failure. This method has proved
@@ -123,7 +123,7 @@ painful for them<sup>[12](#ref12)</sup> and they have been looking to change it 
 driven approach<sup>[13](#ref13)</sup>. At this time they did not seem to have infrastructure
 running to help them. 
 
-#### Rust
+### Rust
 
 Rust have built their own tools to collect benchmark data and present it in a
 web app<sup>[14](#ref14)</sup>. This tool has some interesting features:
@@ -132,16 +132,16 @@ web app<sup>[14](#ref14)</sup>. This tool has some interesting features:
 *   They are committing the data from their experiments into a github repo to
     make the data available to others. 
 
-### Relation to existing OCaml compiler benchmarking efforts
+## Relation to existing OCaml compiler benchmarking efforts
 
-#### OCamlPro Flambda benchmarking
+### OCamlPro Flambda benchmarking
 
 OCamlPro put together the operf-micro, operf-macro and
 [http://bench.flambda.ocamlpro.com/](http://bench.flambda.ocamlpro.com/) site
 to provide a benchmarking environment for flambda. Our work builds on these
 tools and is inspired by them. 
 
-#### Initial OCaml multicore benchmarking site
+### Initial OCaml multicore benchmarking site
 
 OCaml Labs put together an initial multicore benchmarking site
 [http://ocamllabs.io/multicore](http://ocamllabs.io/multicore). This built on
@@ -150,7 +150,7 @@ javascript library; (ii) upgrading to OPAM v2; (iii) updating the
 macro-benchmarks to more recent version.<sup>[15](#ref15)</sup> The work presented here
 incorporates the experience of building that site and builds on it.
 
-### What we put together
+## What we put together
 
 We decided to use operf-micro and sandmark as our benchmarks. We went with
 Codespeed as a visualization tool since it looked easy to setup and had
@@ -163,7 +163,7 @@ the hash. It then runs either operf-micro or sandmark on a clean experimental
 CPU. The data is uploaded into Codespeed to allow users to view and explore the
 data. 
 
-#### Transforming git commits to a timeline
+### Transforming git commits to a timeline
 
 Mapping a git branch to a linear timeline requires a bit of care. We use the
 following mapping, we take a branch tag and ask for commits using the
@@ -172,7 +172,7 @@ timestamp for a commit. In most repositories this will give a linear code order
 that makes sense, even though the development process has been decentralised.
 It works well for Github style pull-requests development.
 
-#### Experimental setup
+### Experimental setup
 
 We wanted to try to remove sources of noise in the performance measurements
 where possible. We configured our x86 Linux machines as follows:<sup>[17](#ref17)</sup>
@@ -195,7 +195,7 @@ where possible. We configured our x86 Linux machines as follows:<sup>[17](#ref17
 With this configuration, we found that we could run benchmarks such that they
 were very likely to give the same result when rerun at another time. 
 
-#### Visualization with Codespeed
+### Visualization with Codespeed
 
 Once the experimental results have been collected, we upload them into the
 codespeed visualization tool which presents a web interface for browsing the
@@ -218,9 +218,9 @@ results. This tool presents three ways to interact with the data:
 The tool provides cross-linking between commits and Github which makes it quick
 to drill into the specific code diff of a commit.
 
-### What we learnt
+## What we learnt
 
-#### Very useful tool to discover performance regressions with multicore
+### Very useful tool to discover performance regressions with multicore
 
 The benchmarking over many compiler commits and visualization tool has been
 very useful in enabling us to determine which test cases have performance
@@ -231,7 +231,7 @@ code changed to cause a performance regression. When performance regressions
 are fixed, the benchmarks are automatically run and so provides a ratchet to
 know you are making things better without additional manual overhead. 
 
-#### Getting a clean experimental setup is possible but takes some care
+### Getting a clean experimental setup is possible but takes some care
 
 We found that getting our machine environment into a state where we could rerun
 benchmarks and get repeatable performance numbers was possible, but takes some
@@ -244,7 +244,7 @@ benchmarking. Having a clean environment allowed us to really probe the
 microstructure effects with x86 performance counters in a rigorous and
 iterative way. 
 
-#### Address space layout randomization (ASLR)
+### Address space layout randomization (ASLR)
 
 This was found following investigation of some benchmark instability coming
 from timeline changes but with commits not touching compiler code. We tracked
@@ -258,7 +258,7 @@ repeatable without the need to take the average of many sample. It remains an
 open area to benchmark in reasonable time and allow easy developer interaction
 while investigating performance under the presence of ASLR<sup>[18](#ref18)</sup>. 
 
-#### Code layout can matter in surprising ways
+### Code layout can matter in surprising ways
 
 It is well known that code layout can matter when evaluating the performance of
 a binary on a modern processor. Modern x86 processors are often deeply
@@ -312,7 +312,7 @@ performance swing on x86 is to look at performance counters around the DSB and
 branch predictor. We hope to add selected performance counter data to the
 benchmarks we publish in the future. 
 
-#### Logistical issues when scaling up
+### Logistical issues when scaling up
 
 To run our experiments in a controlled fashion, we need to schedule
 benchmarking runs so that they do not get impacted by external factors. Right
@@ -323,9 +323,9 @@ architectures, operating systems and benchmarking of more variants of the
 compiler. We have yet to decide what software to use for task scheduling and
 management. 
 
-### Next Steps (as of April 2019)
+## Next Steps (as of April 2019)
 
-#### Managing a heterogeneous cluster of machines, operating systems and benchmarks in a low-overhead way
+### Managing a heterogeneous cluster of machines, operating systems and benchmarks in a low-overhead way
 
 We want to support a large number of machine architectures, operating systems
 and benchmarking suites. To do this we need to control a very large number of
@@ -337,7 +337,7 @@ regeneration of additional data points on demand. By using a scheduler it
 should be possible to get a better resource utilization than under manual block
 scheduling.   
 
-#### Publishing data for downstream tools
+### Publishing data for downstream tools
 
 We would like to provide a mechanism for publishing the raw data we collect
 from running benchmarking experiments. We can see two possible ideas here: i)
@@ -347,7 +347,7 @@ server interface which would also be a component of front-end web app
 visualization tools. This data format could be closely coupled with what
 benchmarking suites publish as the result of running benchmark code. 
 
-#### Modernise the front-end visualization and incorporate multi-dimensional data navigation
+### Modernise the front-end visualization and incorporate multi-dimensional data navigation
 
 We have successfully used Codespeed to visualize our data. This codebase is
 based on old Javascript libraries and has internal mechanisms for transporting
@@ -355,7 +355,7 @@ data. It is not a trivial application to extend or adapt. A new front-end based
 on modern web development technologies which also handles multi-dimensional
 benchmark output easily would be useful. 
 
-#### Ability to sandbox the benchmarks while containing noise for pull-request testing
+### Ability to sandbox the benchmarks while containing noise for pull-request testing
 
 It would be useful for developer workflow to have the ability to benchmark
 pull-request branches. There are challenges to doing this while keeping the
@@ -365,7 +365,7 @@ environment we have from using low-level Linux options. Resource usage control
 and general scheduling would also need to be considered in such a multi-user
 system. 
 
-#### Publish performance counter and GC data coming from benchmarks
+### Publish performance counter and GC data coming from benchmarks
 
 We would like to publish multi-dimensional data from the benchmarks and have a
 structured way to interpret them. There is a bit of work to standardise the
@@ -373,7 +373,7 @@ data we get out of the benchmarks suites and integrating the collection of
 performance counters would also need doing. Once the data is collected, there
 would be a little work to present visualizations of the data.  
 
-#### Experimenting with x86 code alignment emitted from the compiler
+### Experimenting with x86 code alignment emitted from the compiler
 
 LLVM and GCC have a collection of options available to alter the x86 code
 alignment. Some of these get enabled at higher optimization levels and other
@@ -382,13 +382,13 @@ align all jump targets; code size would increase and performance decrease, but
 it might allow you to isolate a performance swing to being due to
 microstructure alignment when doing a deep dive. 
 
-#### Compile time performance benchmarking
+### Compile time performance benchmarking
 
 We would like to produce numbers on the compile-time performance of compiler
 versions. The first step would be to decide on a representative corpus of OCaml
 code to benchmark (could be sandmark).  
 
-#### How to tell if your benchmark suite is giving good coverage of the compiler optimizations
+### How to tell if your benchmark suite is giving good coverage of the compiler optimizations
 
 It would be useful to have some coverage metrics of a benchmarking suite
 relative to the compiler functionality. This might reveal holes in the
@@ -396,7 +396,7 @@ benchmarking suite and having an understanding of which bits of the
 optimization functionality are engaged on a given benchmark could be revealing
 in itself. 
 
-#### Using the infrastructure for continuous benchmarking of general OCaml binaries
+### Using the infrastructure for continuous benchmarking of general OCaml binaries
 
 It would be interesting to try our infrastructure on a larger OCaml project
 where tracking its performance is important to the community of developers and
@@ -404,7 +404,7 @@ users for it. The compiler version would be fixed but the project code would
 move through time. One idea we had is odoc but others projects might be more
 interesting to explore. 
 
-### Conclusions
+## Conclusions
 
 We are satisfied that we have produced infrastructure that will prove effective
 for continuous performance regression of multicore. We are hoping that the
@@ -412,7 +412,7 @@ infrastructure can be more generally useful in the wider community. We hope
 that by sharing our experiences with benchmarking OCaml code we can help people
 quickly realise good benchmarking experiments and avoid non-trivial pitfalls. 
 
-## Notes
+# Notes
 
 <a name="ref1"></a>[^1]: [http://bench.ocamllabs.io](http://bench.ocamllabs.io) which presents operf-micro benchmark experiments and [http://bench2.ocamllabs.io](http://bench2.ocamllabs.io) which presents sandmark based benchmark experiments. 
 
