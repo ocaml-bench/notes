@@ -68,11 +68,28 @@ switches. The use of OPAM is to handle the dependencies of larger benchmarks
 and to handle the maintenances of the macro-benchmark code base. Sandmark takes
 a similar approach to operf-macro but utilizes OPAM v2 and pins the opam repo
 to be internally defined so that all the code is fixed from within the one
-project. OCaml Labs has been adding new benchmarks to sandmark in order to
-increase coverage for multicore testing. 
-
-For the purposes of our benchmarking we decided to run both the operf-micro and
+project. For the purposes of our benchmarking we decided to run both the operf-micro and
 sandmark packages.
+
+##### Single-threaded tests in Sandmark
+
+Included in Sandmark are a range of tests ported from operf-macro that run on or could be easily modified to run on multicore. In addition to these, a new set of performance tests have been added that aim to expand coverage over compiler and runtime areas that differ in implementation between vanilla and multicore. These tests are designed to run on both vanilla and multicore and should highlight changes in single-threaded performance between the two implementations. The main areas we aimed to cover were:
+
+* Stack overflow checks in function prologues
+* Costs of switching stacks when making external calls (alloc/noalloc/various numbers of parameters)
+* Lazy implementation changes
+* Weak pointer implementation changes
+* Finalizer implementation changes
+* General GC performance under various different types of allocation behaviour
+    * Remembered set overhead implementation changes
+
+Also included in sandmark are some of the best single-threaded OCaml entries for the Benchmarks Game, these are already well optimised and should serve to highlight performance differences between vanilla and multicore on single threaded code.
+
+##### Multicore-specific tests in Sandmark
+
+In addition to the single-threaded tests in Sandmark, there are also multicore-specific tests that are intended to highlight performance changes between commits. These consist so far of various simple lock-free data structure tests that stress the multicore GC in different ways e.g some force many GC promotions to the major heap while others pre-allocate.
+
+The intention is to expand the set of multicore specific tests to include larger benchmarks as well as tests that compare existing approaches to parallelism on vanilla OCaml with reimplementations on multicore.
 
 ### How other compiler communities handle continuous benchmarking
 
