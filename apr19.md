@@ -16,7 +16,7 @@ performance, as well as introduce additional non-determinism into measurements d
 to parallelism.
 
 This document describes what we did to build continuous benchmarking
-websites<sup>[1][^1]</sup> that take a controlled experiment approach to running the
+websites<sup>[1](#ref1)</sup> that take a controlled experiment approach to running the
 operf-micro and sandmark benchmarking suites against tracked git branches of
 the OCaml compiler. 
 
@@ -43,7 +43,7 @@ future work that could follow.
 
 ### Survey of OCaml benchmarks
 
-#### Operf-micro<sup>[2][^2]</sup>
+#### Operf-micro<sup>[2](#ref2)</sup>
 
 Operf-micro collates a collection of micro benchmarks originally put together
 to help with the development of flambda. This tool compiles a micro-benchmark
@@ -58,9 +58,9 @@ iteration of the function.
 The tool is designed to have minimal external dependencies and can be run
 against a test compiler binary without additional packages. The experimental
 method of running for multiple embedded iterations is also used by Jane
-Street’s `core_bench`<sup>[3][^3]</sup> and Haskell’s criterion<sup>[4][^4]</sup>.
+Street’s `core_bench`<sup>[3](#ref3)</sup> and Haskell’s criterion<sup>[4](#ref4)</sup>.
 
-#### operf-macro<sup>[5][^5]</sup> and sandmark<sup>[6][^6]</sup>
+#### operf-macro<sup>[5](#ref5)</sup> and sandmark<sup>[6](#ref6)</sup>
 
 Operf-macro provides a framework to define and run macro-benchmarks. The
 benchmarks themselves are OPAM packages and the compiler versions are OPAM
@@ -95,9 +95,9 @@ The intention is to expand the set of multicore specific tests to include larger
 
 #### Python (CPython and PyPy)
 
-The Python community has continuous benchmarking both for their CPython<sup>[7][^7]</sup> and
-PyPy<sup>[8][^8]</sup> runtimes. The benchmarking data is collected by running the Python
-Performance Benchmark Suite<sup>[9][^9]</sup>. The open-source web application Codespeed<sup>[10][^10]</sup>
+The Python community has continuous benchmarking both for their CPython<sup>[7](#ref7)</sup> and
+PyPy<sup>[8](#ref8)</sup> runtimes. The benchmarking data is collected by running the Python
+Performance Benchmark Suite<sup>[9](#ref9)</sup>. The open-source web application Codespeed<sup>[10](#ref10)</sup>
 provides a front end to navigate and visualize the results. Codespeed is
 written in Python on Django and provides views into the results via a revision
 table, a timeline by benchmark and comparison over all benchmarks between
@@ -110,7 +110,7 @@ LLVM has a collection of micro-benchmarks in their C/C++ compiler test suite.
 These micro-benchmarks are built on the google-benchmark library and produce
 statistics that can be easily fed downstream. They also support external tests
 (for example SPEC CPU 2006). LLVM have performance tracking software called LNT
-which drives a continuous monitoring site<sup>[11][^11]</sup>. While the LNT software is
+which drives a continuous monitoring site<sup>[11](#ref11)</sup>. While the LNT software is
 packaged for people to use in other projects, we could not find another project
 using it for visualizing performance data and at first glance did not look easy
 to reuse. 
@@ -119,14 +119,14 @@ to reuse.
 
 The Haskell community have performance regression tests that have hardcoded
 values which trip a continuous-integration failure. This method has proved
-painful for them<sup>[12][^12]</sup> and they have been looking to change it to a more data
-driven approach<sup>[13][^13]</sup>. At this time they did not seem to have infrastructure
+painful for them<sup>[12](#ref12)</sup> and they have been looking to change it to a more data
+driven approach<sup>[13](#ref13)</sup>. At this time they did not seem to have infrastructure
 running to help them. 
 
 #### Rust
 
 Rust have built their own tools to collect benchmark data and present it in a
-web app<sup>[14][^14]</sup>. This tool has some interesting features:
+web app<sup>[14](#ref14)</sup>. This tool has some interesting features:
 
 *   It measures both compile time and runtime performance.
 *   They are committing the data from their experiments into a github repo to
@@ -147,7 +147,7 @@ OCaml Labs put together an initial multicore benchmarking site
 [http://ocamllabs.io/multicore](http://ocamllabs.io/multicore). This built on
 the OCamlPro flambda site by (i) implementing visualization in a single
 javascript library; (ii) upgrading to OPAM v2; (iii) updating the
-macro-benchmarks to more recent version.<sup>[15][^15]</sup> The work presented here
+macro-benchmarks to more recent version.<sup>[15](#ref15)</sup> The work presented here
 incorporates the experience of building that site and builds on it.
 
 ### What we put together
@@ -167,7 +167,7 @@ data.
 
 Mapping a git branch to a linear timeline requires a bit of care. We use the
 following mapping, we take a branch tag and ask for commits using the
-first-parent option<sup>[16][^16]</sup>. We then use the commit date from this as the
+first-parent option<sup>[16](#ref16)</sup>. We then use the commit date from this as the
 timestamp for a commit. In most repositories this will give a linear code order
 that makes sense, even though the development process has been decentralised.
 It works well for Github style pull-requests development.
@@ -175,7 +175,7 @@ It works well for Github style pull-requests development.
 #### Experimental setup
 
 We wanted to try to remove sources of noise in the performance measurements
-where possible. We configured our x86 Linux machines as follows:<sup>[17][^17]</sup>
+where possible. We configured our x86 Linux machines as follows:<sup>[17](#ref17)</sup>
 
 *   **Hyperthreading**: Hyperthreading was configured off in the machine BIOS
     to avoid cross-talk and resource sharing for a CPU.
@@ -256,7 +256,7 @@ give the same result on a single run. User binaries in the wild will likely run
 with ASLR on, but we have configured our environment to make benchmarks
 repeatable without the need to take the average of many sample. It remains an
 open area to benchmark in reasonable time and allow easy developer interaction
-while investigating performance under the presence of ASLR<sup>[18][^18]</sup>. 
+while investigating performance under the presence of ASLR<sup>[18](#ref18)</sup>. 
 
 #### Code layout can matter in surprising ways
 
@@ -273,13 +273,13 @@ benchmarking suite on the hardware we used, we didn’t see any performance
 instability coming from CPU interactions with the instruction or data cache or
 main memory. The instruction path memory bottleneck may still be worth
 optimizing for and we expect that changes which do optimize this area will be
-seen in the sandmark macro-benchmarks<sup>[19][^19]</sup>. There are a collection of
+seen in the sandmark macro-benchmarks<sup>[19](#ref19)</sup>. There are a collection of
 approaches being used to improve code layout for instruction memory latency
-using profile layout<sup>[20][^20]</sup>.
+using profile layout<sup>[20](#ref20)</sup>.
 
 We were surprised by the size of the performance impact that code layout can
 have due to how instructions pass through the front end of an x86 processor on
-their way to being issued<sup>[21][^21]</sup>. On x86 alignment of blocks of instructions and
+their way to being issued<sup>[21](#ref21)</sup>. On x86 alignment of blocks of instructions and
 how decoded uops are packed into decode stream buffers (DSB)  can impact the
 performance of smaller hot loops in code. Examples of some of the mechanical
 effects are:
@@ -298,13 +298,13 @@ there is a good LLVM dev talk given by Zia Ansari (Intel)
 
 We came across some of these hot-code placement effects in our OCaml
 micro-benchmarks when diving into performance swings that we didn’t understand
-by looking at the commit diff. We have an example that can be downloaded<sup>[22][^22]</sup>
+by looking at the commit diff. We have an example that can be downloaded<sup>[22](#ref22)</sup>
 which alters the alignment of a hot loop in an OCaml microbenchmark (without
 changing the individual instructions in the hot loop) that lead to a ~15% range
 in observed performance on our Xeon E5-2430L machine. From a compiler writer’s
 perspective this can be a difficult area, we don’t have any simple solutions
 and other compiler communities also struggle with how to tame these
-effects<sup>[23][^23]</sup>.
+effects<sup>[23](#ref23)</sup>.
 
 It is important to realise that a code layout change can lead to changes in the
 performance of hot loops. The best way to proceed when you see an unexpected
@@ -377,7 +377,7 @@ would be a little work to present visualizations of the data.
 
 LLVM and GCC have a collection of options available to alter the x86 code
 alignment. Some of these get enabled at higher optimization levels and other
-options help with debugging.<sup>[24][^24]</sup> For example, it might be useful to be able to
+options help with debugging.<sup>[24](#ref24)</sup> For example, it might be useful to be able to
 align all jump targets; code size would increase and performance decrease, but
 it might allow you to isolate a performance swing to being due to
 microstructure alignment when doing a deep dive. 
