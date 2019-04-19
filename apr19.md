@@ -108,14 +108,19 @@ threaded code.
 #### Multicore-specific tests in Sandmark
 
 In addition to the single-threaded tests in Sandmark, there are also
-multicore-specific tests that are intended to highlight performance changes
-between commits. These consist so far of various simple lock-free data
-structure tests that stress the multicore GC in different ways e.g some force
-many GC promotions to the major heap while others pre-allocate.
+multicore-specific tests. They come in two flavours. First, are the ones
+intended to highlight performance changes between vanilla and multicore. These
+include benchmarks that perform lots of external calls and callbacks (multicore
+runtime manages stacks), stress tests for lazy (different lazy layout in
+multicore compared to vanilla), weak arrays and ephemerons (different layouts
+and GC algorithms), finalisers (different finaliser structures). 
 
-The intention is to expand the set of multicore specific tests to include
-larger benchmarks as well as tests that compare existing approaches to
-parallelism on vanilla OCaml with reimplementations on multicore.
+Secondly, there are multicore-only tests. These consist so far of various simple
+lock-free data structure tests that stress the multicore GC in different ways
+e.g some force many GC promotions to the major heap while others pre-allocate.
+The intention is to expand the set of multicore specific tests to include larger
+benchmarks as well as tests that compare existing approaches to parallelism on
+vanilla OCaml with reimplementations on multicore.
 
 ## How other compiler communities handle continuous benchmarking
 
