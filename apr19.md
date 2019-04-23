@@ -243,13 +243,13 @@ results. This tool presents three ways to interact with the data:
 *   **Changes**: This view allows you to browse the raw results across all
     benchmarks collected for a particular commit, build variant and machine
     environment.
-*   **Timeline: **This view allows you to look at a given benchmark through
+*   **Timeline**: This view allows you to look at a given benchmark through
     time on a given machine environment. You can compare multiple build
     variants on the same graph. It also has a grid view that gives a panel
     display of timelines for all benchmarks. It can be a good way to spot
     regressions in the performance and see if the regression is persistent in
     nature.
-*   **Comparison: **This view allows you to compare tagged versions of the code
+*   **Comparison**: This view allows you to compare tagged versions of the code
     to each other (including the latest commit of a branch) across all
     benchmarks. This can be a good compact view to ask questions like: “which
     benchmarks is 4.08 faster or slower than 4.07.1?”
@@ -279,7 +279,7 @@ benchmarks and diving into commits that caused performance swings we didn’t
 understand (for example changes to documentation that altered performance).
 Hopefully by collecting the configuration information together in a single
 place other people can quickly setup clean environments for their own
-benchmarking. Having a clean environment allowed us to really probe the
+benchmarking<sup>[17](#ref17)</sup>. Having a clean environment allowed us to really probe the
 microstructure effects with x86 performance counters in a rigorous and
 iterative way. 
 
