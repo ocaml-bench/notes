@@ -1,4 +1,4 @@
-# *OUTLINE:* Benchmarking the OCaml compiler: our experience 
+# *OUTLINE:* Continuous camel racing: reliable benchmarking of the OCaml compiler
 
 Our proposed presentation would describe what we did to build continuous
 benchmarking websites<sup>[1](#ref1)</sup> that take a controlled experiment
