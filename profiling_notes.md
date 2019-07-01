@@ -124,7 +124,7 @@ index b982a838a..8b75b260b 100644
 
 You can then run the following, which will allow callgrind to skip through `caml_c_call`, to create a potentially more useful callgraph:
 ```
-valgrind --tool=callgrind --fn-skip=_init --fn-skip=caml_c_call -- program-to-run program-argements
+valgrind --tool=callgrind --fn-skip=_init --fn-skip=caml_c_call -- program-to-run program-arguments
 ```
 
 Limitations:
@@ -178,6 +178,50 @@ Pros:
  - it's very quick to setup automatic profiling and then determine which functions are the heavy hitters
  - it's easy to selectively profile bits of OCaml code you are interested in
 
+## OCaml Spacetime
+
+The OCaml Spacetime profiler allows you to see where in your program memory is allocated.
+
+Setup an opam switch with Spacetime and all your opam packages:
+```
+ $ opam switch export opam_existing_universe
+ $ opam switch create 4.07.1+spacetime
+ $ opam switch import opam_existing_universe
+```
+
+NB: you might have a stack size issue with the universe, you can expand it to 128M in bash with `ulimit -S -s 131072`.
+
+In the 4.07.1+spacetime switch, build your binary. Now run the executable, using the environment variable OCAML_SPACETIME_INTERVAL to turn on profiling and specify how frequently Spacetime should inspect the OCaml heap (in milliseconds):
+```
+ $ OCAML_SPACETIME_INTERVAL=100 program-to-run program-arguments
+```
+This will output a file of the form `spacetime-<pid>`.
+
+To view the information in this file, we need to process it with `prof_spacetime`. Right now, this only runs on OCaml 4.06.1 and lower. Install as follows:
+```
+ $ opam switch 4.06.1
+ $ opam install prof_spacetime
+```
+To post-process the results do
+```
+ $ prof_spacetime process -e <path to your executable> spacetime-<pid>
+```
+This will produce a `spacetime-<pid>.p` file.
+
+To serve this and interact through a web-browser do:
+```
+ $ prof_spacetime serve -p spacetime-<pid>.p
+```
+
+To look at the data through a CLI interface do:
+```
+ $ prof_spacetime view -p spacetime-<pid>.p
+```
+
+For more on Spacetime and its output see:
+ - Jane Street blog post on Spacetime: https://blog.janestreet.com/a-brief-trip-through-spacetime/
+ - OCaml compiler Spacetime documentation: https://caml.inria.fr/pub/docs/manual-ocaml/spacetime.html
+
 ## strace
 
 This tool is very useful for knowing what system calls your program is making. You can wrap a run of your binary with:
@@ -223,6 +267,7 @@ let fn_i ys (z:int) =
 ```
 
 You can also use the `Analysis` mode to see how specific chunks of assembly will be executed (try something like: `--mcpu=skylake --timeline`).
+
 
 ## Other resources
 
