@@ -78,7 +78,7 @@ kcachegrind callgrind.out.pid
 After a while you will start to notice that you have strange symbols that don't make sense or that you can't see. There are a couple of things you can fix:
  - You need to make sure you have the sources available for all dependent packages (incl the compiler). This can be done in opam with:
  ```
-opam reinstall switch --keep-build-dir
+opam switch reinstall --keep-build-dir
  ```
  - You will want to have the debugging symbols available for the standard Linux libraries; refer to your distribution for how to do that.
 
@@ -221,6 +221,32 @@ To look at the data through a CLI interface do:
 For more on Spacetime and its output see:
  - Jane Street blog post on Spacetime: https://blog.janestreet.com/a-brief-trip-through-spacetime/
  - OCaml compiler Spacetime documentation: https://caml.inria.fr/pub/docs/manual-ocaml/spacetime.html
+
+
+## Statistical memory profiling for OCaml
+
+Install the opam statistical-memprof switch:
+```
+ $ opam switch create 4.07.1+statistical-memprof
+ $ opam switch import <opam_universe_file>
+```
+
+Download the `MemprofHelpers` module from:
+ https://github.com/jhjourdan/ocaml/blob/memprof/memprofHelpers.ml
+
+And within your binary you need to execute
+```
+MemprofHelpers.start 1E-4 20 100
+```
+
+You may also need to setup a dump function by looking at `MemprofHelpers.start` if delivering SIGUSR1 to snapshot is not easy.
+
+
+Slightly out of data github:
+  https://github.com/jhjourdan/ocaml/tree/memprof
+
+Document describing the design:
+  https://hal.inria.fr/hal-01406809/document
 
 ## strace
 
