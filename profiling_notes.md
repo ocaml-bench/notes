@@ -5,17 +5,24 @@ There are many ways of profiling OCaml code. Here we describe several we have us
 
 ## perf record profiling
 
-Basic setup
+To allow non-root users to use perf on Linux, you may need to execute:
+```
+echo 0 | sudo tee /proc/sys/kernel/perf_event_paranoid
+```
+
+Basic recording of an ocaml program
 ```
 perf record --call-graph dwarf -- program-to-run program-arguments
+```
+
+Basic viewing of a perf recording
+```
 perf report -G
-perf report --call-graph
 perf report --children
 perf report --no-children
 perf report --no-children --kallsyms /proc/kallsyms
+perf report --call-graph=folded
 ```
-
-echo 0 | sudo tee /proc/sys/kernel/kptr_restrict
 
 Installing debug symbols on ubuntu
  https://wiki.ubuntu.com/Debug%20Symbol%20Packages
@@ -24,6 +31,11 @@ In particular the kernel symbols:
  `apt-get install linux-image-$(uname -r)-dbgsym`
 and libgmp
  `apt-get install `
+
+To allow non-root users to see the kernel symbols:
+```
+echo 0 | sudo tee /proc/sys/kernel/kptr_restrict
+```
 
 Pointer to perf Examples:
  http://www.brendangregg.com/perf.html
@@ -82,7 +94,7 @@ opam switch reinstall --keep-build-dir
  ```
  - You will want to have the debugging symbols available for the standard Linux libraries; refer to your distribution for how to do that.
 
-With that done, you may still have some odd functions appearing. This can be because the OCaml compilers (at least before 4.08) don't export the size several assembler functions (particularly `caml_c_call`) into the ELF binary. Ideally the OCaml runtime would export the size of in the ELF information, but right now it does not have `.size` directives in the assembler.
+With that done, you may still have some odd functions appearing. This can be because the OCaml compilers (at least before 4.08) don't export the size of several assembler functions (particularly `caml_c_call`) into the ELF binary. Ideally the OCaml runtime would export the size of functions in the ELF information, but right now it does not have `.size` directives in the assembler.
 
 To fix this, you will need to build a patched valgrind which will let you see them.
 
