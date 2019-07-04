@@ -21,7 +21,6 @@ perf report -G
 perf report --children
 perf report --no-children
 perf report --no-children --kallsyms /proc/kallsyms
-perf report --call-graph=folded
 ```
 
 Installing debug symbols on ubuntu
@@ -37,8 +36,23 @@ To allow non-root users to see the kernel symbols:
 echo 0 | sudo tee /proc/sys/kernel/kptr_restrict
 ```
 
-Pointer to perf Examples:
+For many more perf Examples:
  http://www.brendangregg.com/perf.html
+
+### perf flamegraphs
+
+You can also visualize the perf data using the FlameGraph package
+```
+# git clone https://github.com/brendangregg/FlameGraph  # or download it from github
+# cd FlameGraph
+# perf record --callgraph dwarf -- program-to-run program-arguments
+# perf script | ./stackcollapse-perf.pl | ./flamegraph.pl > perf-flamegraph.svg
+```
+
+The flamegraph output allows you to see the dynamics of the function calls. For more on flamegraphs see:
+ http://www.brendangregg.com/perf.html#FlameGraphs
+ http://www.brendangregg.com/flamegraphs.html
+ https://github.com/brendangregg/FlameGraph
 
 Pros:
  - it's fast as it samples the running program
