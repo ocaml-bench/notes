@@ -28,14 +28,14 @@ and libgmp
 Pointer to perf Examples:
  http://www.brendangregg.com/perf.html
 
+Pros:
+ - it's fast as it samples the running program
+ - the cli can be a very quick way of getting a callchain to start from with a big program
+
 Limitations:
  - sometimes can get strange annotations
  - it's statistical so you don't get full coverage or call counts
  - the OCaml runtime functions can be confusing if you aren't familiar with them
-
-Pros:
- - it's fast as it samples the running program
- - the cli can be a very quick way of getting a callchain to start from with a big program
 
 ## OCaml gprof support
 
@@ -59,7 +59,7 @@ Limitations:
  - your program is instrumented so isn't what you will really run in production
  - not obvious how to profile 3rd party packages built through OPAM
 
-TODO:
+Open questions:
  - is there a way to build to get all the stdlib covered?
  - is there a way to build to get opam covered?
 
@@ -127,12 +127,6 @@ You can then run the following, which will allow callgrind to skip through `caml
 valgrind --tool=callgrind --fn-skip=_init --fn-skip=caml_c_call -- program-to-run program-arguments
 ```
 
-Limitations:
- - quite slow to run
- - not supported out of the box; right now to get the function skip you will need to compile your own valgrind
- - recursive functions give confusing total function cost scores which should be ignored
- - the OCaml runtime functions can be confusing if you aren't familiar with them
-
 Pros:
  - the function call counts are accurate
  - the instruction count information is very accurate
@@ -140,6 +134,11 @@ Pros:
  - kcachegrind gives you a graphical front end which can sometimes be easier to navigate
  - with the fn-skip options you can look through the caml_c_call to get a callchain from ocaml through underlying libraries (including the OCaml runtime)
 
+Limitations:
+ - quite slow to run
+ - not supported out of the box; right now to get the function skip you will need to compile your own valgrind (this should change following PR8708 on the ocaml compiler)
+ - recursive functions give confusing total function cost scores which should be ignored
+ - the OCaml runtime functions can be confusing if you aren't familiar with them
 
 ## OCaml Landmarks
 
@@ -168,15 +167,15 @@ or for auto instrumentation:
 ppx(`ocamlfind query landmarks.ppx`/ppx.exe --as-ppx --auto)
 ```
 
+Pros:
+ - it's very quick to setup automatic profiling and then determine which functions are the heavy hitters
+ - it's easy to selectively profile bits of OCaml code you are interested in
+
 Limitations:
  - the timing information includes the overhead of any landmarks within another landmark
  - the allocation information includes the overhead of any landmarks within another landmark
  - the addition of the landmark will change the compiled code and can remove inlining opportunities that would occur in a release binary
  - can slow down your binary in some cases
-
-Pros:
- - it's very quick to setup automatic profiling and then determine which functions are the heavy hitters
- - it's easy to selectively profile bits of OCaml code you are interested in
 
 ## OCaml Spacetime
 
@@ -222,6 +221,15 @@ For more on Spacetime and its output see:
  - Jane Street blog post on Spacetime: https://blog.janestreet.com/a-brief-trip-through-spacetime/
  - OCaml compiler Spacetime documentation: https://caml.inria.fr/pub/docs/manual-ocaml/spacetime.html
 
+Pros:
+ - gives rich information about when during the objects are allocated
+ - gives rich information about which functions are allocating on the minor or major heap
+ - the web-browser gui is quick and intuitive to navigate
+
+Limitations:
+ - can slow down your binary in some cases and require more memory to run
+ - can be a pain to juggle switches to view the profile
+ - is focused on memory rather than runtime performance (although these are often heavily linked)
 
 ## Statistical memory profiling for OCaml
 
@@ -239,14 +247,24 @@ And within your binary you need to execute
 MemprofHelpers.start 1E-4 20 100
 ```
 
-You may also need to setup a dump function by looking at `MemprofHelpers.start` if delivering SIGUSR1 to snapshot is not easy.
+You may also need to setup a dump function by looking at `MemprofHelpers.start` if delivering SIGUSR1 to snapshot is not easy. Your mileage may vary on how useful the output is to look at.
 
-
-Slightly out of data github:
+Slightly out of date github:
   https://github.com/jhjourdan/ocaml/tree/memprof
 
 Document describing the design:
   https://hal.inria.fr/hal-01406809/document
+
+Pros:
+ - quick to run
+ - gives rich information about which functions are allocating on the minor or major heap
+
+Limitations:
+ - you need to write code in your binary to get this up and running
+ - is focused on memory rather than runtime performance (although these are often heavily linked)
+
+Open questions:
+ - is there a better way than having to do `MemprofHelpers.start` in your binary?
 
 ## strace
 
@@ -254,13 +272,6 @@ This tool is very useful for knowing what system calls your program is making. Y
 ```
 strace -o <file for output> program-to-run program-arguments
 ```
-
-## VTune
-
-Intel's VTune is now available to download here:
- https://software.intel.com/en-us/vtune/choose-download
-
-TODO: usage
 
 ## Compiler explorer
 
@@ -294,6 +305,13 @@ let fn_i ys (z:int) =
 
 You can also use the `Analysis` mode to see how specific chunks of assembly will be executed (try something like: `--mcpu=skylake --timeline`).
 
+
+Pros:
+ - can give you an intuition of what your code will turn into
+
+Limitations:
+ - instructions don't tell you about runtime performance directly, you will always need to benchmark
+ - not really an efficient way to tackle existing code
 
 ## Other resources
 
