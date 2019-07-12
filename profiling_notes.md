@@ -1,26 +1,35 @@
 # Profiling OCaml code
 
-There are many ways of profiling OCaml code. Here we describe several we have used that should get you up and going.
+There are many ways of profiling OCaml code. Here we describe several we have used that should help you get up and going.
 
 
 ## perf record profiling
 
-To allow non-root users to use perf on Linux, you may need to execute:
-```
-echo 0 | sudo tee /proc/sys/kernel/perf_event_paranoid
-```
+perf is a statistical profiler on Linux that can profile a binary without needing instrumentation.
 
 Basic recording of an ocaml program
 ```
+# vanilla
 perf record --call-graph dwarf -- program-to-run program-arguments
+# exclude child process (-i), user cycles
+perf record --call-graph dwarf -i -e cycles:u -- program-to-run program-arguments
 ```
 
 Basic viewing of a perf recording
 ```
-perf report -G
+# top down view
 perf report --children
+# bottom up view
 perf report --no-children
+# bottom up view, including kernel symbols
 perf report --no-children --kallsyms /proc/kallsyms
+# inverted call-graph can be useful on some versions of perf
+perf report --inverted
+```
+
+To allow non-root users to use perf on Linux, you may need to execute:
+```
+echo 0 | sudo tee /proc/sys/kernel/perf_event_paranoid
 ```
 
 Installing debug symbols on ubuntu
@@ -39,6 +48,15 @@ echo 0 | sudo tee /proc/sys/kernel/kptr_restrict
 For many more perf Examples:
  http://www.brendangregg.com/perf.html
 
+Pros:
+ - it's fast as it samples the running program
+ - the cli can be a very quick way of getting a callchain to start from with a big program
+
+Limitations:
+ - sometimes can get strange annotations
+ - it's statistical so you don't get full coverage or call counts
+ - the OCaml runtime functions can be confusing if you aren't familiar with them
+
 ### perf flamegraphs
 
 You can also visualize the perf data using the FlameGraph package
@@ -54,14 +72,8 @@ The flamegraph output allows you to see the dynamics of the function calls. For 
  http://www.brendangregg.com/flamegraphs.html
  https://github.com/brendangregg/FlameGraph
 
-Pros:
- - it's fast as it samples the running program
- - the cli can be a very quick way of getting a callchain to start from with a big program
-
-Limitations:
- - sometimes can get strange annotations
- - it's statistical so you don't get full coverage or call counts
- - the OCaml runtime functions can be confusing if you aren't familiar with them
+Another front end to perf files is the speedscope web application:
+ https://www.speedscope.app/
 
 ## OCaml gprof support
 
@@ -270,7 +282,7 @@ Download the `MemprofHelpers` module from:
 
 And within your binary you need to execute
 ```
-MemprofHelpers.start 1E-4 20 100
+MemprofHelpers.start 1E-3 20 100
 ```
 
 You may also need to setup a dump function by looking at `MemprofHelpers.start` if delivering SIGUSR1 to snapshot is not easy. Your mileage may vary on how useful the output is to look at.
