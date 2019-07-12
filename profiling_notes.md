@@ -1,4 +1,5 @@
 # Profiling OCaml code
+_Tom Kelly ([ctk21@cl.cam.ac.uk](mailto:ctk21@cl.cam.ac.uk))_
 
 There are many ways of profiling OCaml code. Here we describe several we have used that should help you get up and going.
 
