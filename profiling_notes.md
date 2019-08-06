@@ -15,6 +15,8 @@ Basic recording of an ocaml program
 perf record --call-graph dwarf -- program-to-run program-arguments
 # exclude child process (-i), user cycles
 perf record --call-graph dwarf -i -e cycles:u -- program-to-run program-arguments
+# expand sampled stack (which will make the traces larger) to capture deeper call stacks
+perf record --call-graph dwarf,32768 -i -e cycles:u -- program-to-run program-arguments
 ```
 
 Basic viewing of a perf recording
