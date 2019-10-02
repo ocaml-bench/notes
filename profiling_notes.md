@@ -52,6 +52,9 @@ echo 0 | sudo tee /proc/sys/kernel/kptr_restrict
 For many more perf Examples:
  http://www.brendangregg.com/perf.html
 
+Profiling with perf zine by Julia Evans is a great resource for getting a hang of perf:
+https://jvns.ca/perf-zine.pdf
+
 Pros:
  - it's fast as it samples the running program
  - the cli can be a very quick way of getting a callchain to start from with a big program
