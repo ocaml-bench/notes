@@ -70,7 +70,7 @@ You can also visualize the perf data using the FlameGraph package
 ```
 # git clone https://github.com/brendangregg/FlameGraph  # or download it from github
 # cd FlameGraph
-# perf record --callgraph dwarf -- program-to-run program-arguments
+# perf record --call-graph dwarf -- program-to-run program-arguments
 # perf script | ./stackcollapse-perf.pl | ./flamegraph.pl > perf-flamegraph.svg
 ```
 
