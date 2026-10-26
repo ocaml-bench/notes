@@ -1,0 +1,374 @@
+{
+  "schema_version": "1.0",
+  "run_id": "ermine-2026-10-15-Thu-231057",
+  "created_at": "2026-10-18T06:08:56Z",
+  "machine": {
+    "hostname": "ermine",
+    "kernel": "6.8.0-90-generic",
+    "cores": 80,
+    "cpu_model": "Neoverse-N1",
+    "cpu_isolation": "topology",
+    "physical_cores": 80,
+    "threads_per_core": 1,
+    "numa_nodes": 1,
+    "sockets": 1
+  },
+  "configs": [
+    {
+      "config_id": "cfg_19a920ed9b5dd66aaf3a5a96caaa05f7",
+      "runtime": {
+        "kind": "OCaml",
+        "version": "5.5.1"
+      },
+      "tools": [
+        "olly",
+        "perf"
+      ],
+      "_runtime_name": "ocaml-5.5.1",
+      "_modifiers": [
+        "perf_grp1"
+      ]
+    },
+    {
+      "config_id": "cfg_bbbdddf9134ce42694d9e9234bef6a99",
+      "runtime": {
+        "kind": "OCaml",
+        "version": "5.5.1",
+        "options": [
+          "CFLAGS=-falign-functions=32"
+        ]
+      },
+      "tools": [
+        "olly",
+        "perf"
+      ],
+      "_runtime_name": "ocaml-5.5.1-alignF",
+      "_modifiers": [
+        "perf_grp1"
+      ]
+    },
+    {
+      "config_id": "cfg_0bc836e0f5b2525e9350425776b9b78f",
+      "runtime": {
+        "kind": "OCaml",
+        "version": "5.5.1",
+        "options": [
+          "--enable-frame-pointers"
+        ]
+      },
+      "tools": [
+        "olly",
+        "perf"
+      ],
+      "_runtime_name": "ocaml-5.5.1-fp",
+      "_modifiers": [
+        "perf_grp1"
+      ]
+    },
+    {
+      "config_id": "cfg_493bc91d39c7c4ae36c57d94ed0723a4",
+      "runtime": {
+        "kind": "OCaml",
+        "version": "5.5.1",
+        "options": [
+          "--enable-frame-pointers",
+          "CFLAGS=-falign-functions=32"
+        ]
+      },
+      "tools": [
+        "olly",
+        "perf"
+      ],
+      "_runtime_name": "ocaml-5.5.1-fp-alignF",
+      "_modifiers": [
+        "perf_grp1"
+      ]
+    },
+    {
+      "config_id": "cfg_5c3cc58a7b30968a7b98b5b957f3bb37",
+      "runtime": {
+        "kind": "OCaml",
+        "version": "5.5.1",
+        "options": [
+          "--enable-flambda",
+          "CFLAGS=-falign-functions=32"
+        ]
+      },
+      "tools": [
+        "olly",
+        "perf"
+      ],
+      "_runtime_name": "ocaml-5.5.1-flambda-alignF",
+      "_modifiers": [
+        "perf_grp1"
+      ]
+    },
+    {
+      "config_id": "cfg_86ddfa8dac1350fd533b35b01eeecc26",
+      "runtime": {
+        "kind": "OCaml",
+        "version": "5.5.1",
+        "options": [
+          "--enable-frame-pointers",
+          "--enable-flambda",
+          "CFLAGS=-falign-functions=32"
+        ]
+      },
+      "tools": [
+        "olly",
+        "perf"
+      ],
+      "_runtime_name": "ocaml-5.5.1-fp-flambda-alignF",
+      "_modifiers": [
+        "perf_grp1"
+      ]
+    }
+  ],
+  "tool_versions": {
+    "perf": "6.8.12",
+    "olly": "e31d9081e3de71a4c3e72c9a0b7a3ca336b62f92"
+  },
+  "comparisons": [
+    {
+      "kind": "inter",
+      "over": "runtime",
+      "mode": "pairwise",
+      "baseline": {
+        "runtime.version": "5.5.1",
+        "runtime.options": []
+      },
+      "variants": [
+        {
+          "runtime.version": "5.5.1",
+          "runtime.options": [
+            "CFLAGS=-falign-functions=32"
+          ]
+        }
+      ],
+      "label": "5.5.1: falign vs stock (no fp)"
+    },
+    {
+      "kind": "inter",
+      "over": "runtime",
+      "mode": "pairwise",
+      "baseline": {
+        "runtime.version": "5.5.1",
+        "runtime.options": []
+      },
+      "variants": [
+        {
+          "runtime.version": "5.5.1",
+          "runtime.options": [
+            "--enable-frame-pointers"
+          ]
+        },
+        {
+          "runtime.version": "5.5.1",
+          "runtime.options": [
+            "--enable-frame-pointers",
+            "CFLAGS=-falign-functions=32"
+          ]
+        }
+      ],
+      "label": "5.5.1: fp and fp+falign vs stock"
+    },
+    {
+      "kind": "inter",
+      "over": "runtime",
+      "mode": "pairwise",
+      "baseline": {
+        "runtime.version": "5.5.1",
+        "runtime.options": []
+      },
+      "variants": [
+        {
+          "runtime.version": "5.5.1",
+          "runtime.options": [
+            "--enable-flambda",
+            "CFLAGS=-falign-functions=32"
+          ]
+        },
+        {
+          "runtime.version": "5.5.1",
+          "runtime.options": [
+            "--enable-frame-pointers",
+            "--enable-flambda",
+            "CFLAGS=-falign-functions=32"
+          ]
+        }
+      ],
+      "label": "5.5.1: flambda+falign variants vs stock"
+    }
+  ],
+  "benchmarks": [
+    {
+      "name": "menhir_ocamly",
+      "suite": "macro-menhir-monorepo"
+    },
+    {
+      "name": "menhir_sysver_canonical",
+      "suite": "macro-menhir-monorepo"
+    },
+    {
+      "name": "cpdf_squeeze_default",
+      "suite": "macro-cpdf-monorepo"
+    },
+    {
+      "name": "cpdf_squeeze_large",
+      "suite": "macro-cpdf-monorepo"
+    },
+    {
+      "name": "alt_ergo_chain_default",
+      "suite": "macro-alt-ergo-monorepo"
+    },
+    {
+      "name": "alt_ergo_chain_large",
+      "suite": "macro-alt-ergo-monorepo"
+    },
+    {
+      "name": "frama_c_eva_sqlite_default",
+      "suite": "macro-frama-c-monorepo"
+    },
+    {
+      "name": "frama_c_eva_sqlite_large",
+      "suite": "macro-frama-c-monorepo"
+    },
+    {
+      "name": "goblint_gen_default",
+      "suite": "macro-goblint-monorepo"
+    },
+    {
+      "name": "goblint_gen_large",
+      "suite": "macro-goblint-monorepo"
+    },
+    {
+      "name": "infer_default",
+      "suite": "macro-infer-monorepo"
+    },
+    {
+      "name": "infer_large",
+      "suite": "macro-infer-monorepo"
+    },
+    {
+      "name": "coqc_tree_default",
+      "suite": "macro-coq-monorepo"
+    },
+    {
+      "name": "coqc_tree_large",
+      "suite": "macro-coq-monorepo"
+    },
+    {
+      "name": "devkit_htmlstream_default",
+      "suite": "macro-devkit"
+    },
+    {
+      "name": "devkit_htmlstream_large",
+      "suite": "macro-devkit"
+    },
+    {
+      "name": "irmin_mem_rw_default",
+      "suite": "macro-irmin"
+    },
+    {
+      "name": "irmin_mem_rw_large",
+      "suite": "macro-irmin"
+    },
+    {
+      "name": "ocamlformat_rocq_default",
+      "suite": "macro-ocamlformat"
+    },
+    {
+      "name": "ocamlformat_rocq_large",
+      "suite": "macro-ocamlformat"
+    },
+    {
+      "name": "test_decompress_default",
+      "suite": "macro-decompress"
+    },
+    {
+      "name": "test_decompress_large",
+      "suite": "macro-decompress"
+    },
+    {
+      "name": "eio_conc_default",
+      "suite": "macro-eio"
+    },
+    {
+      "name": "eio_conc_large",
+      "suite": "macro-eio"
+    },
+    {
+      "name": "sedlex_tokenize_default",
+      "suite": "macro-sedlex"
+    },
+    {
+      "name": "sedlex_tokenize_large",
+      "suite": "macro-sedlex"
+    },
+    {
+      "name": "ydump_repeat_default",
+      "suite": "macro-yojson"
+    },
+    {
+      "name": "ydump_repeat_large",
+      "suite": "macro-yojson"
+    },
+    {
+      "name": "zarith_pi_default",
+      "suite": "macro-zarith"
+    },
+    {
+      "name": "zarith_pi_large",
+      "suite": "macro-zarith"
+    },
+    {
+      "name": "owl_gc_default",
+      "suite": "macro-owl"
+    },
+    {
+      "name": "owl_gc_large",
+      "suite": "macro-owl"
+    },
+    {
+      "name": "ocamlc_compile_uucp_default",
+      "suite": "macro-ocamlc-self-compile"
+    },
+    {
+      "name": "ocamlc_compile_uucp_large",
+      "suite": "macro-ocamlc-self-compile"
+    },
+    {
+      "name": "liq_parse_typecheck_default",
+      "suite": "macro-liquidsoap-lang"
+    },
+    {
+      "name": "liq_parse_typecheck_large",
+      "suite": "macro-liquidsoap-lang"
+    },
+    {
+      "name": "jsoo_default",
+      "suite": "macro-jsoo"
+    },
+    {
+      "name": "jsoo_large",
+      "suite": "macro-jsoo"
+    },
+    {
+      "name": "liq_video_frames_pool_default",
+      "suite": "macro-liq-video-frames"
+    },
+    {
+      "name": "liq_video_frames_pool_large",
+      "suite": "macro-liq-video-frames"
+    },
+    {
+      "name": "pplacer_like_default",
+      "suite": "macro-pplacer"
+    },
+    {
+      "name": "pplacer_like_large",
+      "suite": "macro-pplacer"
+    }
+  ],
+  "_produced_by": "running-ng (native)"
+}
